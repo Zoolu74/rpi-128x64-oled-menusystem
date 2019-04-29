@@ -74,7 +74,7 @@ class MenuSystem:
 	def checkButtons(self):
 		# check buttons to see if they've been pressed and if so call handler function
 		for button in self.buttons:
-			if GPIO.input(button.GPIO_Pin):
+			if not GPIO.input(button.GPIO_Pin):
 				self.changedFlipFlop = True
 				#if button 1 pressed
 				if (button.lable == "Button1"):
@@ -105,6 +105,24 @@ class MenuSystem:
 					# the selectedMenu variable isn't incered until the button handler is proccessed so we don't upade title until now
 					self.display.clearTitle()
 					self.display.drawTitle(self.titles[globalsettings.selectedMenu])
+
+				#if button 3 pressed
+				if (button.lable == "Button3"):
+					#call button handler
+					button.buttonPress(menu=self.menus[globalsettings.selectedMenu],menufunc=self.myMenuFunctions)
+					if ( self.menus[globalsettings.selectedMenu].selected > (globalsettings.MAX_ITEM_PERSCREEN-1)):
+						if (globalsettings.DEBUGFLAG >= 1):
+							print("scrolling past end of screen")
+						if ( globalsettings.SECOND_SCREEN == True ):
+							globalsettings.SECOND_SCREEN = False
+						if ( globalsettings.SECOND_SCREEN == False ):
+							globalsettings.SECOND_SCREEN = True
+						if (globalsettings.DEBUGFLAG >= 1):
+							print("SECOND SCREEN = ", globalsettings.SECOND_SCREEN)				
+					if (self.menus[globalsettings.selectedMenu].selected == 0 or self.menus[globalsettings.selectedMenu].selected == 4):
+						#print("Clearing display")
+						self.display.clearDisplay()
+						self.display.clearMainScreen()	
 				time.sleep(globalsettings.BUTTON_SLEEP_TIME)	
 					
 	def updateScreen(self):						

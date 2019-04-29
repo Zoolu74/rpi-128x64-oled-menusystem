@@ -3,11 +3,7 @@
 # debug messages
 DEBUGFLAG = 1
 # Raspberry Pi pin configuration:
-RST = 24
-# Note the following are only used with SPI:
-DC = 23
-SPI_PORT = 0
-SPI_DEVICE = 0
+RST = None
 
 #screen configuration
 # height of each text line in pixels

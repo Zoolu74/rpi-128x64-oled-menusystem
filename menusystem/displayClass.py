@@ -3,7 +3,6 @@
 import sys
 sys.path.insert(0, "../")
 import globalsettings
-import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 from PIL import Image
 from PIL import ImageDraw
@@ -13,10 +12,6 @@ from PIL import ImageFont
 #globals
 # Raspberry Pi pin configuration:
 RST  = globalsettings.RST
-# Note the following are only used with SPI:
-DC = globalsettings.DC
-SPI_PORT = globalsettings.SPI_PORT
-SPI_DEVICE = globalsettings.SPI_DEVICE
 
 #screen configuration
 # height of each text line in pixels
@@ -32,7 +27,7 @@ SECOND_SCREEN = globalsettings.SECOND_SCREEN
 
 class Display:
 	def __init__(self):
-		self.disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST, dc=DC, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=8000000))
+		self.disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST)
 		self.disp.begin()
 		self.disp.clear()
 		self.disp.display()
